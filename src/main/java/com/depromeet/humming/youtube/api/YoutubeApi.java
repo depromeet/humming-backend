@@ -2,26 +2,27 @@ package com.depromeet.humming.youtube.api;
 
 import com.depromeet.humming.youtube.model.Youtube;
 import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @Component
 public class YoutubeApi implements ReactiveYoutubeApi {
 
-    private static final String API_URL = "https://www.googleapis.com/youtube/v3/search" +
-            "?key=AIzaSyBRa6UEjmyCOrv5ug1jEB8DOs2NuKZFePk&part=snippet&type=video&maxResults=20&videoEmbeddable=true&q={}";
+  private final String youtubeApiUrl;
+  private final String youtubeApiKey;
+  private final WebClient webClient;
 
-    private final WebClient webClient;
+  public YoutubeApi(@Value("${humming.weather.api.url}") String apiUrl,
+      @Value("${humming.weather.api.key}") String apiKey, WebClient webClient) {
+    this.youtubeApiUrl = apiUrl
+        + "/youtube/v3/search?key={key}&part=snippet&type=video&maxResults=20&videoEmbeddable=true&q={search}";
+    this.youtubeApiKey = apiKey;
+    this.webClient = webClient;
+  }
 
-    public YoutubeApi(WebClient webClient) {
-        this.webClient = webClient;
-    }
-
-    @Override
-    public Mono<Youtube> getSearchYoutube(String search) {
-
-        return webClient.get().uri(API_URL, search)
-                .retrieve()
-                .bodyToMono(Youtube.class);
-    }
+  @Override
+  public Mono<Youtube> getSearchYoutube(String search) {
+    return webClient.get().uri(youtubeApiUrl, youtubeApiKey, search).retrieve().bodyToMono(Youtube.class);
+  }
 }
