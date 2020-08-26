@@ -18,11 +18,23 @@ public class WeatherApiResponse {
 
     @Getter
     public static class WeatherData {
-        private List<Weather> weather;
+        private List<WeatherInfo> weather;
 
         @JsonCreator
-        public WeatherData(@JsonProperty("weather") List<Weather> weather) {
+        public WeatherData(@JsonProperty("weather") List<WeatherInfo> weather) {
             this.weather = weather;
+        }
+    }
+
+    @Getter
+    public static class WeatherInfo {
+        private final String type;
+        private final String description;
+
+        @JsonCreator
+        public WeatherInfo(@JsonProperty("main") String type, @JsonProperty("description") String description) {
+            this.type = type;
+            this.description = description;
         }
     }
 }
