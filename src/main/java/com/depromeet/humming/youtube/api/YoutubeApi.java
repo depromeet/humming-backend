@@ -13,8 +13,10 @@ public class YoutubeApi implements ReactiveYoutubeApi {
   private final String youtubeApiKey;
   private final WebClient webClient;
 
-  public YoutubeApi(@Value("${humming.weather.api.url}") String apiUrl,
-      @Value("${humming.weather.api.key}") String apiKey, WebClient webClient) {
+  public YoutubeApi(
+    @Value("${humming.youtube.api.url}") String apiUrl,
+    @Value("${humming.youtube.api.key}") String apiKey, WebClient webClient
+  ) {
     this.youtubeApiUrl = apiUrl
         + "/youtube/v3/search?key={key}&part=snippet&type=video&maxResults=20&videoEmbeddable=true&q={search}";
     this.youtubeApiKey = apiKey;

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class WeatherStatusProvider {
 
     public WeatherStatus provide(String status) {
-        switch (status) {
+        switch (status.toUpperCase()) {
             case "SUN":
                 return WeatherStatus.SUN;
             case "CLOUD":

@@ -27,7 +27,7 @@ public class WeatherApiResponse {
     }
 
     @Getter
-    public class WeatherInfo {
+    public static class WeatherInfo {
         private final String type;
         private final String description;
 
